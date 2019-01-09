@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const fs = require("fs");
+const child_process = require("child_process");
 
 const newProjectName = "new-project";
 
@@ -26,35 +27,35 @@ fs.mkdir(`${newProjectName}`, null, err => {
                   fs.writeFile(
                     `${newProjectName}/.eslintrc`,
                     `{
-                        "parserOptions": {
-                          "ecmaVersion": 6,
-                          "sourceType": "module",
-                          "ecmaFeatures": {
-                            "jsx": true
+                          "parserOptions": {
+                            "ecmaVersion": 6,
+                            "sourceType": "module",
+                            "ecmaFeatures": {
+                              "jsx": true
+                            }
+                          },
+                          "env": {
+                            "node": true,
+                            "mocha": true,
+                            "browser": true,
+                            "es6": true
+                          },
+                          "extends": ["eslint:recommended"],
+                          "plugins": [
+                          ],
+                          "rules": {
+                            "no-console": 0,
+                            "space-before-blocks": 1,
+                            "arrow-spacing": 1,
+                            "keyword-spacing": 1,
+                            "space-infix-ops": 1,
+                            "space-in-parens": 1,
+                            "spaced-comment": 1,
+                            "semi": 1,
+                            "no-multiple-empty-lines": 1
                           }
-                        },
-                        "env": {
-                          "node": true,
-                          "mocha": true,
-                          "browser": true,
-                          "es6": true
-                        },
-                        "extends": ["eslint:recommended"],
-                        "plugins": [
-                        ],
-                        "rules": {
-                          "no-console": 0,
-                          "space-before-blocks": 1,
-                          "arrow-spacing": 1,
-                          "keyword-spacing": 1,
-                          "space-infix-ops": 1,
-                          "space-in-parens": 1,
-                          "spaced-comment": 1,
-                          "semi": 1,
-                          "no-multiple-empty-lines": 1
                         }
-                      }
-                      `,
+                        `,
                     err => {
                       if (err)
                         console.log(
@@ -76,8 +77,21 @@ fs.mkdir(`${newProjectName}`, null, err => {
                                     `oops, couldnt create ${newProjectName}/spec/index.spec.js`
                                   );
                                 else {
-                                  console.log(
-                                    `created index.spec.js - woohoo! your new project is all set up!`
+                                  console.log(`creating package.json file`);
+                                  child_process.exec(
+                                    "cd new-project/ && npm init -y",
+                                    null,
+                                    err => {
+                                      if (err)
+                                        console.log(
+                                          "oops, couldnt create a package.json file for this project"
+                                        );
+                                      else {
+                                        console.log(
+                                          "woohoo! your new project is all set up!"
+                                        );
+                                      }
+                                    }
                                   );
                                 }
                               }
