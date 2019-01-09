@@ -11,5 +11,8 @@
     "generate": "./generator.js"
   },
   "keywords": [],
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "inquirer": "^6.2.1"
+  }
 }
