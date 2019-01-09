@@ -79,7 +79,7 @@ fs.mkdir(`${newProjectName}`, null, err => {
                                 else {
                                   console.log(`creating package.json file`);
                                   child_process.exec(
-                                    "cd new-project/ && npm init -y",
+                                    `cd ${newProjectName} && npm init -y && git init`,
                                     null,
                                     err => {
                                       if (err)
